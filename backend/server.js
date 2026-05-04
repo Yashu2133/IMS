@@ -7,7 +7,12 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://incmasys.netlify.app/' // your netlify URL
+  ]
+}));
 app.use(express.json());
 
 // Rate limiter — max 100 requests per minute on signal ingestion
