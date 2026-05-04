@@ -10,7 +10,7 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://incmasys.netlify.app/' // your netlify URL
+    'https://incmasys.netlify.app' // your netlify URL
   ]
 }));
 app.use(express.json());
