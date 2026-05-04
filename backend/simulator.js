@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 // npm install axios first
-const BASE_URL = 'http://localhost:5000/api/signals';
+const BASE_URL = 'https://your-app-name.onrender.com/api/signals';
 
 const FAKE_SIGNALS = [
   { componentId: 'PAYMENT_API',     type: 'API_FAILURE',  message: 'Connection timeout after 30s' },
