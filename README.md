@@ -1,8 +1,6 @@
 # Incident Management System (IMS)
 
-A production-grade incident tracking system that ingests error signals,
-deduplicates them using debounce logic, and manages the full incident
-lifecycle with mandatory Root Cause Analysis.
+An incident management system that ingests high frequency error signals, reduces alert noise through a debounce engine and surfaces actionable work items with enforced Root Cause Analysis.
 
 ## Live Demo
 
