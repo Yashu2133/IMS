@@ -7,8 +7,6 @@ lifecycle with mandatory Root Cause Analysis.
 ## Live Demo
 
 - Frontend: https://incmasys.netlify.app
-- Backend API: https://ims-backend-yx2q.onrender.com
-- Health Check: https://ims-backend-yx2q.onrender.com/health
 
 ## Architecture
 
