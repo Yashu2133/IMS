@@ -13,6 +13,8 @@ lifecycle with mandatory Root Cause Analysis.
 ## Architecture
 
 ```
+![IMS Architecture](./architecture.png)
+
 Signal Sources (API failures, DB delays, Cache misses, Queue backups)
         ↓
 Ingestion API (Rate limited - 100 req/min)
@@ -54,11 +56,25 @@ React Dashboard (Live feed, Incident detail, RCA form)
 
 ## Quick Demo (See It Working)
 
-### Option 1: One command — no setup needed
+### Option 1: View Live App 
+
+Just open the browser. Incidents are already loaded from previous runs.
+
+```
+https://incmasys.netlify.app
+```
+
+---
+
+### Option 2: Send a Single Signal 
+
+Send one signal directly to the live backend and see it appear
+on the dashboard within 5 seconds.
 
 **Windows PowerShell:**
 ```powershell
-Invoke-WebRequest -Uri "https://ims-backend-yx2q.onrender.com/api/signals" `
+Invoke-WebRequest `
+  -Uri "https://ims-backend-yx2q.onrender.com/api/signals" `
   -Method POST `
   -ContentType "application/json" `
   -Body '{"componentId":"PAYMENT_API","type":"API_FAILURE","message":"Payment timeout"}'
@@ -71,76 +87,81 @@ curl -X POST https://ims-backend-yx2q.onrender.com/api/signals \
   -d '{"componentId":"PAYMENT_API","type":"API_FAILURE","message":"Payment timeout"}'
 ```
 
-Then open https://incmasys.netlify.app to see the incident appear.
+Then open https://incmasys.netlify.app — incident appears automatically.
 
-### Option 2: Full simulator (7 signals across 4 components)
+---
+
+### Option 3: Run Full Simulator (Sends 7 signals, shows debounce)
+
+Clone the repo and run the simulator against the live backend.
+No local server needed — simulator sends signals to Render directly.
+
 ```bash
-git clone https://github.com/YOUR_USERNAME/ims-project
-cd ims-project/backend
+git clone https://github.com/Yashu2133/IMS
+cd IMS/backend
 npm install
 node simulator.js
 ```
 
 Then open https://incmasys.netlify.app
 
-## Local Setup (Without Docker)
 
-### Prerequisites
-- Node.js v18+
-- MongoDB Atlas account
+> Note: simulator.js sends to the live Render backend by default.
+> If you want to run locally instead, change BASE_URL to
+> http://localhost:5000/api/signals before running.
 
-### Backend
-```bash
-cd backend
-npm install
-```
+---
 
-Create `backend/.env`:
-```
-MONGO_URI=your_mongodb_atlas_uri
-PORT=5000
-```
+### Option 4: Run Locally with Docker (Full local setup)
+
+Run the entire app on your own machine with one command.
+Needs your own MongoDB Atlas URI.
 
 ```bash
-npm run dev
+# Step 1: Clone
+git clone https://github.com/Yashu2133/IMS
+cd IMS
 ```
 
-### Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Visit http://localhost:5173
-
-## Local Setup (With Docker)
-
-### Prerequisites
-- Docker Desktop installed and running
-
-### Steps
-```bash
-git clone https://github.com/YOUR_USERNAME/ims-project
-cd ims-project
-```
-
-Create root `.env`:
+Create root `.env` file:
 ```
 MONGO_URI=your_mongodb_atlas_uri
 ```
 
 ```bash
+# Step 2: Start everything (backend + frontend)
 docker-compose up --build
 ```
 
-- Backend: http://localhost:5000
-- Frontend: http://localhost:5173
+```
+Backend running at:  http://localhost:5000
+Frontend running at: http://localhost:5173
+```
+
+```bash
+# Step 3: Open new terminal — update simulator URL then run
+# Change BASE_URL in simulator.js to:
+# http://localhost:5000/api/signals
+cd IMS/backend
+node simulator.js
+```
+
+```bash
+# Step 4: Open browser
+http://localhost:5173
+```
+
+Incidents appear on the dashboard automatically.
 
 ```bash
 # To stop
 docker-compose down
 ```
+
+> Note: Without running simulator in Step 3,
+> dashboard will be empty because local MongoDB has no data yet.
+
+---
 
 ## API Endpoints
 
