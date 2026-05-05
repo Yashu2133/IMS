@@ -12,9 +12,9 @@ lifecycle with mandatory Root Cause Analysis.
 
 ## Architecture
 
-```
 ![IMS Architecture](./architecture.png)
 
+```
 Signal Sources (API failures, DB delays, Cache misses, Queue backups)
         ↓
 Ingestion API (Rate limited - 100 req/min)
